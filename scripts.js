@@ -2,10 +2,15 @@
 // and insert them in the DOM object found with "whereTo" -- note this
 // uses document.querySelector, so use CSS notation on "whereTo"
 
-function loadFileInto(fromFile, whereTo) {
+function loadFileInto(recipeName, listName, whereTo) {
 
 	// 1. creating a new XMLHttpRequest object
 	ajax = new XMLHttpRequest();
+  
+  // 2. define from file variable
+  fromFile = "recipes.php?recipeName=" + recipeName + "&recipeList=" + listName;
+	
+	console.log("From URL: " + fromFile); 
 
 	// 2. defines the GET/POST method, the source, and the async value of the AJAX object
 	ajax.open("GET", fromFile, true);
@@ -32,38 +37,35 @@ function loadFileInto(fromFile, whereTo) {
 
 
 // new Recipe object
-function Recipe(recipeName, contributorName, imageURL, ingredientsFilename, equipmentFilename, directionsFilename){
+function Recipe(recipeName, contributorName, imageURL,) {
   
   this.recipe = recipeName;
   this.contributor = contributorName;
   this.img = imageURL;
-  this.ingredients = ingredientsFilename;
-  this.equipment = equipmentFilename;
-  this.directions = directionsFilename;
   
-  this.displayRecipe = function(){
+  this.displayRecipe = function() {
     
     document.querySelector("#foodbkgd h1").innerHTML = this.recipe;
-    document.querySelector("#contributor").innerHTML = this.contributor;
+    document.querySelector("#contributor").innerHTML = "Contributed by " + this.contributor;
     document.querySelector("#foodbkgd").style.backgroundImage = "url(" + this.img + ")";
     
     
     
-  loadFileInto(this.ingredients, "#ingredients ul");
-  loadFileInto(this.equipment, "#equipment ul");
-  loadFileInto(this.directions, "#directions ol");
+  loadFileInto(this.recipe, "ingredients", "#ingredients ul");
+  loadFileInto(this.recipe, "equipment", "#equipment ul");
+  loadFileInto(this.recipe, "directions", "#directions ol");
     
   }
   
 }
 
 
-CauliflowerMacNCheese = new Recipe("Cauliflower Mac-N-Cheese", "Saskia", "https://images.unsplash.com/photo-1543339494-b4cd4f7ba686?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80", "ingredients.html", "equipment.html", "directions.html");
+CauliflowerMacNCheese = new Recipe("Cauliflower Mac-N-Cheese", "Saskia", "https://images.unsplash.com/photo-1543339494-b4cd4f7ba686?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80");
 
-ChocolateChipCookies = new Recipe("Chocolate Chip Cookies", "Aida", "https://images.unsplash.com/photo-1584847801423-852691e41bc7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80", "ingredientsA.html", "equipmentA.html", "directionsA.html");
+ChocolateChipCookies = new Recipe("Chocolate Chip Cookies", "Aida", "https://images.unsplash.com/photo-1584847801423-852691e41bc7?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80");
 AnotherRecipe = new Recipe();
 
-LemonBars = new Recipe("Lemon Bars", "Cody", "https://images.unsplash.com/photo-1587496679742-bad502958fbf?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGVtb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60", "ingredientsC.html", "equipmentC.html", "directionsC.html");
+LemonBars = new Recipe("Lemon Bars", "Cody", "https://images.unsplash.com/photo-1587496679742-bad502958fbf?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bGVtb258ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60");
 AnotherRecipe = new Recipe();
 
 
@@ -71,7 +73,7 @@ AnotherRecipe = new Recipe();
 
 window.onload = function() {
   
-  document.querySelector("#foodbkgd").classList.add("title");
+  document.querySelector("#foodbkgd").classList.toggle("title");
 
   
   document.querySelector("#ingredients").onclick = function() {

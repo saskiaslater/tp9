@@ -4,7 +4,7 @@
 $name = $_GET["recipeName"]; 
 $list = $_GET["recipeList"]; 
 
-if ($name == "Seven Layer Bars") {
+if ($name == "Cauliflower Mac-N-Cheese") {
 	
 	if ($list == "ingredients") {
 		include "ingredients.html";
